@@ -1,0 +1,31 @@
+{% extends "/base.html" %}
+{% block title %} {{ title }} {% endblock %}
+
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block body %}
+
+  <div>
+    <h3>Thank you for visiting ankesand.com</h3>
+    <ul style="display: inline-block; padding: 0;">
+      <li style="display: inline-block; list-style-type: none; background-color: #dd8a8a; min-width: 100px; border-radius: 10px; margin: 0 5px 0 5px; padding: 5px;">
+        <a href="{{ url_for('weather') }}">work/weather</a>
+      </li>
+      <li style="display: inline-block; list-style-type: none; background-color: #dd8a8a; min-width: 100px; border-radius: 10px; margin: 0 5px 0 5px; padding: 5px;">
+        <a href='#'>xxx2</a>
+      </li>
+      <li style="display: inline-block; list-style-type: none; background-color: #dd8a8a; min-width: 100px; border-radius: 10px; margin: 0 5px 0 5px; padding: 5px;">
+        <a href="{{ url_for('web_scraping') }}">work/web-scraping</a>
+      </li>
+      <li style="display: inline-block; list-style-type: none; background-color: #dd8a8a; min-width: 100px; border-radius: 10px; margin: 0 5px 0 5px; padding: 5px;">
+        <a href="{{ url_for('static', filename='static1.html') }}">url_for('static'...)</a>
+      </li>
+    </ul>
+
+  </div>
+
+{% endblock %}
+
+</html>
