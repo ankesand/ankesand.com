@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='ankesand.css') }}">
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <title>{% block title %}{% endblock %}</title>
+
+    {% block head %}
+    {% endblock %}
+
+  </head>
+
+  <body>
+
+    <div id="bodybody">
+
+      <div id="banner-head" class="flex-item dark-blue">
+        <h2><a href="{{ url_for('index') }}">ankesand.com</a></h2>
+        <ul style="display: inline-block; padding: 0;">
+          <li style="display: inline-block; list-style-type: none; background-color: #dd8a8a; min-width: 100px; border-radius: 10px; margin: 0 5px 0 5px; padding: 5px;">
+            <a href="{{ url_for('work') }}">work</a>
+          </li>
+          <li style="display: inline-block; list-style-type: none; background-color: #8add8a; min-width: 100px; border-radius: 10px; margin: 0 5px 0 5px; padding: 5px;">
+            <a href="{{ url_for('about') }}">about</a>
+          </li>
+          <li style="display: inline-block; list-style-type: none; background-color: #8a8add; min-width: 100px; border-radius: 10px; margin: 0 5px 0 5px; padding: 5px;">
+            <a href="{{ url_for('contact') }}">contact</a>
+          </li>
+        </ul>
+      </div>
+
+      <div id="main-main">
+
+      {% block body %}
+      {% endblock %}
+
+      </div>
+
+      <div id="banner-foot" class="flex-item yellow">
+        <table class="flex-item" style="width: 100%;">
+          <tr>
+            <td>
+              <h3><a href = "mailto: info@ankesand.com">info@ankesand.com</a></h3>
+              <h4>&#169; 2020 Ankesand Ltd. All rights reserved.</h4>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+    </div>
+
+  </body>
+</html>
