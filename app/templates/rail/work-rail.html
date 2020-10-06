@@ -1,0 +1,140 @@
+{% extends "/base_old.html" %}
+{% block title %} {{ title }} {% endblock %}
+
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block body %}
+
+  <div class="banner-h2 mid-blue-dark">
+    <h2><a href="{{ url_for('work') }}"><i class="fas fa-toolbox"></i> work</a></h2>
+  </div>
+
+  <div class="banner-h3 mid-blue">
+    <h3><i class="fas fa-subway"></i> rail</h3>
+  </div>
+
+  <div class="abc">
+    <div class="xyz" style="text-align: left;">
+      {% if not departures is defined %}
+      <h4 style="text-align: center;">UK train departures app utilising National Rail's 'Darwin' API data feed</h4>
+      <div class="abc">
+        <div class="xyz m75-d50" style="text-align: center; background-color: #dfdfdf;">
+          <h3>Enter UK station:</h3>
+
+          <form method="POST" action="{{ url_for('rail') }}">
+          {{ station_crs.csrf_token }}
+          {{ station_crs.crs(size="32") }}
+          <br>
+          <br>
+          {{ station_crs.submit }}
+          <br>
+          <br>
+          </form>
+          <script>
+          $( function() {
+            $( "#crs" ).autocomplete({
+              source: {{ stations|tojson }}
+            });
+          } );
+          </script>
+
+        </div>
+      </div>
+      
+      <h5 style="font-weight: lighter;">Select station (via JQuery autocomplete widget) from above form to look up CRS, send http request and parse XML response / render to HTML table</h5>
+      <h5 style="font-weight: lighter;">(Stations / CRS (.csv) obtained via Requests and stored as Python dictionary object)</h5>
+
+      {% endif %}
+
+      {% if departures is defined %}
+      <div class="abc">
+        <div class="xyz" style="text-align: center; background-color: #dfdfdf;">
+          <h3>Departures for:</h3>
+
+          <h4><b>{{ station }} ({{ crs }})</b></h4>
+
+          <br>
+
+<!--
+      <div id="raildepartures" class="railinfo" style="min-width: 75%;">
+-->
+          <div id="weatherforecast" class="weatherinfo" style="overflow-x:auto;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Departure Time</th>
+                  <th>Scheduled</th>
+                  <th>Platform</th>
+                  <th>Destination</th>
+                  <th>Operator</th>
+                  <th>Carriages</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for departure in departures %}
+                <tr>
+                  <td>{{ departures[departure].service_std }}</td>
+                  <td>{{ departures[departure].service_etd }}</td>
+                  <td>{{ departures[departure].platform }}</td>
+                  <td>{{ departures[departure].destination_name }}</td>
+                  <td>{{ departures[departure].operator }}</td>
+                  <td>{{ departures[departure].length }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+
+            <br>
+            
+            <a href="{{ url_for('rail') }}"><button>Reset</button></a>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
+      {% if railservices is defined %}
+
+      <h3>Service:</h3>
+
+      <h4><b>[ service ]</b></h4>
+
+      <br>
+      <br>
+<!--
+      <div id="railservices" class="railinfo">
+-->
+      <div id="weatherforecast" class="weatherinfo">
+        <table>
+          <thead>
+            <tr>
+              <th colspan=2>[services]</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>service1</td>
+              <td>service2</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      {% endif %}
+
+      <div class="abc">
+        <div class="xyz" style="text-align: center; width: 25%; background-color: White; margin: 10px; border-radius: 10px;">
+          <a href="http://lite.realtime.nationalrail.co.uk/openldbws"><img src="../static/NRE_Powered_logo.png" style="width: 95%; margin: 5px; padding-right: 5%;"></a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="banner-h4 mid-blue-light">
+    <h4><a href="{{ url_for('rail') }}"><i class="fas fa-file-code"></i> view code</a></h4>
+  </div>
+
+{% endblock %}
+
+</html>
