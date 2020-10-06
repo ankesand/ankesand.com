@@ -1,0 +1,90 @@
+{% extends "/base_old.html" %}
+{% block title %} {{ title }} {% endblock %}
+
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block body %}
+
+  <div class="banner-h2 mid-blue-dark">
+    <h2><a href="{{ url_for('weather') }}"><i class="fas fa-toolbox"></i> work</a></h2>
+  </div>
+
+  <div class="banner-h3 mid-blue">
+    <h3><i class="fas fa-cloud-sun"></i> weather</h3>
+  </div>
+
+  <div class="abc">
+    <div class="xyz" style="text-align: left;">
+      {% if not forecast is defined %}
+      <h4 style="text-align: center;">Weather check app utilising Met Office 'DataPoint' API data feed</h4>
+      <div class="abc">
+        <div class="xyz m75-d50" style="text-align: center; background-color: #dfdfdf;">
+          <h3>Enter UK town / city:</h3>
+          <form method="POST" action="{{ url_for('weather') }}">
+          {{ lat_long_town_city.csrf_token }}
+          {{ lat_long_town_city.town_city(size="32") }}
+          <br>
+          <br>
+          {{ lat_long_town_city.submit }}
+          <br>
+          </form>
+          <script>
+          $( function() {
+            $( "#town_city" ).autocomplete({
+              source: {{ towns_cities_autocomplete|tojson }}
+            });
+          } );
+          </script>
+        </div>
+      </div>
+      <h5 style="font-weight: lighter;">Select town / city (via JQuery autocomplete widget) from above form to look up latitude / longitude geographical coordinates, send http request and parse JSON response / render to HTML table</h5>
+      <h5 style="font-weight: lighter;">(Towns and cities / latitude and longitude coordinates obtained via Requests / BeautifulSoup web scraping and stored in MySQL database / accessed using SQLAlchemy)</h5>
+
+      {% endif %}
+      
+      {% if forecast is defined %}
+
+      <div id="weatherforecast" class="weatherinfo">
+      <h3>Forecast for:</h3>
+
+      <h4><b>{{ location }}</b></h4>
+      (Lat/long: {{ lat_ }}, {{ long_ }})
+      <br>
+      <br>
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              {% for i in forecast.columns %}
+              <th>{{ i }}</th>
+              {% endfor %}
+            </tr>
+          </thead>
+          <tbody>
+          {% for i, v in forecast.iterrows() %}
+          <tr>
+            <th>{{ i }}</th>
+            <td>{{ v['Low'] }}&#176;C</td>
+            <td>{{ v['Mid'] }}&#176;C</td>
+            <td>{{ v['High'] }}&#176;C</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    <br>
+    <a href="{{ url_for('weather') }}"><button>Reset</button></a>
+    </div>
+    {% endif %}
+
+    </div>
+  </div>
+
+  <div class="banner-h4 mid-blue-light">
+    <h4><a href="{{ url_for('weather') }}"><i class="fas fa-file-code"></i> view code</a></h4>
+  </div>
+
+{% endblock %}
+
+</html>
